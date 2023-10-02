@@ -1,4 +1,4 @@
-import { ToDoService } from './../../../services/to-do.service';
+import { QueryClientService } from '@ngneat/query';
 import { Component, OnInit, inject } from '@angular/core';
 
 @Component({
@@ -7,14 +7,15 @@ import { Component, OnInit, inject } from '@angular/core';
   styleUrls: ['./to-do-page.component.scss'],
 })
 export class ToDoComponent implements OnInit {
+  private queryClient = inject(QueryClientService);
   todo$: any;
 
-  constructor(toDoService: ToDoService) {
-    const response = toDoService.getToDos().result$;
-    response.subscribe((data: any) => {
-      this.todo$ = data.data;
-    });
+  constructor() {
+    const response = this.queryClient.getQueryData<any>(['TO_DOS']);
+    this.todo$ = response;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.todo$);
+  }
 }

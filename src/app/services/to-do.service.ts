@@ -15,9 +15,7 @@ export class ToDoService {
 
   getToDo(id: number) {
     return this.useQuery(['TO_DO', id], () => {
-      return this.http.get<any>(
-        `https://jsonplaceholder.typicode.com/todos/${id}`
-      );
+      return this.http.get<any>(`https://jsonplaceholder.typicode.com/todos/${id}`);
     });
   }
 }
